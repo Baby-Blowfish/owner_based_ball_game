@@ -1,0 +1,6 @@
+<map id="BallListNode" name="BallListNode">
+<area shape="rect" id="node1" title="Node structure for storing ball objects in a linked list." alt="" coords="56,184,160,211"/>
+<area shape="rect" id="node2" href="$structScreenBall.html" title="Ball structure for screen display in client resolution." alt="" coords="5,95,96,121"/>
+<area shape="rect" id="node3" href="$structRGBColor.html" title="Structure representing RGB color information." alt="" coords="66,5,150,32"/>
+<area shape="rect" id="node4" href="$structLogicalBall.html" title="Structure representing a single ball object (server&#45;side)" alt="" coords="120,95,213,121"/>
+</map>

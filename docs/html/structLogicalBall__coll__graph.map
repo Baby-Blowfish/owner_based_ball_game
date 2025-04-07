@@ -1,0 +1,4 @@
+<map id="LogicalBall" name="LogicalBall">
+<area shape="rect" id="node1" title="Structure representing a single ball object (server&#45;side)" alt="" coords="5,95,99,121"/>
+<area shape="rect" id="node2" href="$structRGBColor.html" title="Structure representing RGB color information." alt="" coords="10,5,94,32"/>
+</map>

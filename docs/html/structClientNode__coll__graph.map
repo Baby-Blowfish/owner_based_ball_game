@@ -1,0 +1,4 @@
+<map id="ClientNode" name="ClientNode">
+<area shape="rect" id="node1" title="Structure representing a client node in the linked list." alt="" coords="16,95,111,121"/>
+<area shape="rect" id="node2" href="$structSocketContext.html" title="Structure representing a socket context." alt="" coords="5,5,121,32"/>
+</map>

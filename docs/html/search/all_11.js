@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['tail_180',['tail',['../structBallListManager.html#a74c528bd060cb5447dc2b211ae428978',1,'BallListManager::tail()'],['../structClientListManager.html#a52d16435c2349ff5aa270d2d690ef3df',1,'ClientListManager::tail()']]],
+  ['task_181',['Task',['../structTask.html',1,'']]],
+  ['task_2ec_182',['task.c',['../task_8c.html',1,'']]],
+  ['task_2eh_183',['task.h',['../task_8h.html',1,'']]],
+  ['task_5fqueue_184',['task_queue',['../structSharedContext.html#a301f283b2372d1594e64a482d62d3821',1,'SharedContext']]],
+  ['task_5fqueue_5fcapacity_185',['TASK_QUEUE_CAPACITY',['../task_8h.html#a03f4253f37afc79fe2fdc33aea1a10b2',1,'task.h']]],
+  ['task_5fqueue_5fdestroy_186',['task_queue_destroy',['../task_8h.html#a77d8d6ab29e7dc685ae03304015ab0d7',1,'task_queue_destroy(TaskQueue *q):&#160;task.c'],['../task_8c.html#a77d8d6ab29e7dc685ae03304015ab0d7',1,'task_queue_destroy(TaskQueue *q):&#160;task.c']]],
+  ['task_5fqueue_5finit_187',['task_queue_init',['../task_8h.html#a30d4a0d7c613b6dd454c9d5e49e8c058',1,'task_queue_init(TaskQueue *q):&#160;task.c'],['../task_8c.html#a30d4a0d7c613b6dd454c9d5e49e8c058',1,'task_queue_init(TaskQueue *q):&#160;task.c']]],
+  ['task_5fqueue_5fpop_188',['task_queue_pop',['../task_8h.html#a485285d4993388409c181cb719ecddbb',1,'task_queue_pop(TaskQueue *q):&#160;task.c'],['../task_8c.html#a485285d4993388409c181cb719ecddbb',1,'task_queue_pop(TaskQueue *q):&#160;task.c']]],
+  ['task_5fqueue_5fpush_189',['task_queue_push',['../task_8h.html#a4d43d3995525bd349f4efca5208e0c9d',1,'task_queue_push(TaskQueue *q, Task task):&#160;task.c'],['../task_8c.html#a4d43d3995525bd349f4efca5208e0c9d',1,'task_queue_push(TaskQueue *q, Task task):&#160;task.c']]],
+  ['taskqueue_190',['TaskQueue',['../structTaskQueue.html',1,'']]],
+  ['test_5fclient_2ec_191',['test_client.c',['../test__client_8c.html',1,'']]],
+  ['test_5fclient_2eh_192',['test_client.h',['../test__client_8h.html',1,'']]],
+  ['test_5fmain_2ec_193',['test_main.c',['../test__main_8c.html',1,'']]],
+  ['test_5fscreenball_2ec_194',['test_screenball.c',['../test__screenball_8c.html',1,'']]],
+  ['test_5fscreenball_2eh_195',['test_screenball.h',['../test__screenball_8h.html',1,'']]],
+  ['test_5fscreenball_5flist_2ec_196',['test_screenball_list.c',['../test__screenball__list_8c.html',1,'']]],
+  ['test_5fscreenball_5flist_2eh_197',['test_screenball_list.h',['../test__screenball__list_8h.html',1,'']]],
+  ['test_5fscreenballmanager_2ec_198',['test_screenballmanager.c',['../test__screenballmanager_8c.html',1,'']]],
+  ['test_5fscreenballmanager_2eh_199',['test_screenballmanager.h',['../test__screenballmanager_8h.html',1,'']]],
+  ['thread_5fnum_200',['THREAD_NUM',['../client_2main_8c.html#acd532f688378febc70bf2aedccd9bb60',1,'THREAD_NUM():&#160;main.c'],['../test__main_8c.html#acd532f688378febc70bf2aedccd9bb60',1,'THREAD_NUM():&#160;test_main.c']]],
+  ['total_5fcount_201',['total_count',['../structBallListManager.html#a75a835d63501f5f3b3ffc4fad043f5d6',1,'BallListManager']]]
+];

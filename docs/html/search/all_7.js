@@ -1,0 +1,10 @@
+var searchData=
+[
+  ['handle_5fadd_97',['handle_add',['../localballmanager_8h.html#ae5a1880dc39fb5e56eed7b232f629c5d',1,'handle_add(BallListManager *m, int count, int radius):&#160;localballmanager.c'],['../localballmanager_8c.html#ae5a1880dc39fb5e56eed7b232f629c5d',1,'handle_add(BallListManager *m, int count, int radius):&#160;localballmanager.c']]],
+  ['handle_5fdelete_98',['handle_delete',['../localballmanager_8h.html#a9716647714749ded4403ee6f57b81ad1',1,'handle_delete(BallListManager *m, int count, int radius):&#160;localballmanager.c'],['../localballmanager_8c.html#a9716647714749ded4403ee6f57b81ad1',1,'handle_delete(BallListManager *m, int count, int radius):&#160;localballmanager.c']]],
+  ['handle_5fsigint_99',['handle_sigint',['../client_2main_8c.html#a8bfc90b3fb9344e9caafec953baacc0b',1,'handle_sigint(int sig):&#160;main.c'],['../server_2main_8c.html#a8bfc90b3fb9344e9caafec953baacc0b',1,'handle_sigint(int sig):&#160;main.c'],['../test__main_8c.html#a8bfc90b3fb9344e9caafec953baacc0b',1,'handle_sigint(int sig):&#160;test_main.c']]],
+  ['handle_5fspeed_5fdown_100',['handle_speed_down',['../localballmanager_8h.html#ab68d8ab1e261f4c7009aab91ec33a653',1,'handle_speed_down(BallListManager *m, int count, int radius):&#160;localballmanager.c'],['../localballmanager_8c.html#ab68d8ab1e261f4c7009aab91ec33a653',1,'handle_speed_down(BallListManager *m, int count, int radius):&#160;localballmanager.c']]],
+  ['handle_5fspeed_5fup_101',['handle_speed_up',['../localballmanager_8h.html#a17658ab8e1dbafb5da47c81d008da8d0',1,'handle_speed_up(BallListManager *m, int count, int radius):&#160;localballmanager.c'],['../localballmanager_8c.html#a17658ab8e1dbafb5da47c81d008da8d0',1,'handle_speed_up(BallListManager *m, int count, int radius):&#160;localballmanager.c']]],
+  ['handler_102',['handler',['../structCommandEntry.html#aeddc472a418053d47258ee82f0acd8b4',1,'CommandEntry']]],
+  ['head_103',['head',['../structBallListManager.html#aaf9153fec4aac933b58a7c56289f29ce',1,'BallListManager::head()'],['../structClientListManager.html#a94375dfabf02a071ac7634efd7e25dbf',1,'ClientListManager::head()']]]
+];

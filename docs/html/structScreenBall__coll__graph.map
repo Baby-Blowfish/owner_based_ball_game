@@ -1,0 +1,4 @@
+<map id="ScreenBall" name="ScreenBall">
+<area shape="rect" id="node1" title="Ball structure for screen display in client resolution." alt="" coords="5,95,96,121"/>
+<area shape="rect" id="node2" href="$structRGBColor.html" title="Structure representing RGB color information." alt="" coords="9,5,93,32"/>
+</map>
