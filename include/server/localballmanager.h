@@ -97,7 +97,7 @@ void ball_manager_destroy(BallListManager* manager);
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void add_ball(BallListManager* manager, int count, int radius);
+void add_ball(BallListManager* manager, int count, int radius, int owner_id);
 
 /**
  * @brief Deletes balls from the ball list
@@ -107,7 +107,7 @@ void add_ball(BallListManager* manager, int count, int radius);
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void delete_ball(BallListManager* manager, int count);
+void delete_ball(BallListManager* manager, int count, int owner_id);
 
 /**
  * @brief Updates the positions of all balls
@@ -126,7 +126,7 @@ void move_all_ball(BallListManager* manager);
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-char* serialize_ball_list(BallListManager* manager);
+char* serialize_ball_list(BallListManager* manager, int owner_id);
 
 /**
  * @brief Handles the add ball command
@@ -182,6 +182,6 @@ void handle_speed_down(BallListManager* m, int count, int radius);
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void dispatch_command(char cmd, int count, int radius, BallListManager* m);
+void dispatch_command(BallListManager* m, char cmd, int count, int radius, int owner_id);
 
 #endif // LOCAL_BALL_MANAGER_H

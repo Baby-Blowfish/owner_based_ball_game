@@ -64,18 +64,6 @@ void printInfoBall(BallListNode *head);
 void moveBallList(BallListNode* head);
 
 /**
- * @brief Deletes the last ball from the linked list
- * @param head Double pointer to the head of the linked list
- * @param tail Double pointer to the tail of the linked list
- * @return A pointer to the deleted node, or NULL if the list is empty
- * @details Removes the last node from the linked list and updates the tail pointer.
- *          If the list becomes empty after deletion, both head and tail are set to NULL.
- * @date 2025-04-07
- * @author Kim Hyo Jin
- */
-BallListNode* deleteLastBall(BallListNode** head, BallListNode** tail);
-
-/**
  * @brief Increases the velocity of all balls in the linked list
  * @param head Pointer to the head of the linked list
  * @details Traverses the linked list and increases the velocity (dx, dy) of each ball object.
@@ -83,7 +71,7 @@ BallListNode* deleteLastBall(BallListNode** head, BallListNode** tail);
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void speedUpBalls(BallListNode* head);
+void speedUpBalls(BallListNode* head, int owner_id);
 
 /**
  * @brief Decreases the velocity of all balls in the linked list
@@ -93,7 +81,7 @@ void speedUpBalls(BallListNode* head);
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void slowDownBalls(BallListNode* head);
+void speedDownBalls(BallListNode* head, int owner_id);
 
 /**
  * @brief Frees all memory allocated for the linked list

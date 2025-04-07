@@ -43,62 +43,41 @@ void moveBallList(BallListNode* head) {
 }
 
 
-BallListNode* deleteLastBall(BallListNode** head, BallListNode** tail) {
-    if (*head == NULL) return NULL;
 
-    BallListNode* removed = NULL;
-
-    // 한 개만 있을 때
-    if (*head == *tail) {
-        removed = *head;
-        *head = NULL;
-        *tail = NULL;
-    } else {
-        BallListNode* cur = *head;
-        while (cur->next != *tail) {
-            cur = cur->next;
-        }
-        removed = *tail;
-        cur->next = NULL;
-        *tail = cur;
-    }
-    printf(COLOR_GREEN "[Success] '%d' Deleted successfully." COLOR_RESET, removed->data.id);
-
-    free(removed);
-    return *head;
-}
-
-void speedUpBalls(BallListNode* head) {
+void speedUpBalls(BallListNode* head, int owner_id) {
     BallListNode* cur = head;
     while (cur != NULL) {
-        if (cur->data.dx > 0)
-            cur->data.dx = (cur->data.dx > MAX_SPEED) ? MAX_SPEED : cur->data.dx * 2;
-        else if (cur->data.dx < 0)
-            cur->data.dx = (cur->data.dx < MIN_SPEED) ? MIN_SPEED : cur->data.dx * 2;
+        if(cur->data.owner_id == owner_id) {
 
-        if (cur->data.dy > 0)
-            cur->data.dy = (cur->data.dy > MAX_SPEED) ? MAX_SPEED : cur->data.dy * 2;
-        else if (cur->data.dy < 0)
-            cur->data.dy = (cur->data.dy < MIN_SPEED) ? MIN_SPEED : cur->data.dy * 2;
+            if (cur->data.dx > 0)
+                cur->data.dx = (cur->data.dx > MAX_SPEED) ? MAX_SPEED : cur->data.dx * 2;
+            else if (cur->data.dx < 0)
+                cur->data.dx = (cur->data.dx < MIN_SPEED) ? MIN_SPEED : cur->data.dx * 2;
 
+            if (cur->data.dy > 0)
+                cur->data.dy = (cur->data.dy > MAX_SPEED) ? MAX_SPEED : cur->data.dy * 2;
+            else if (cur->data.dy < 0)
+                cur->data.dy = (cur->data.dy < MIN_SPEED) ? MIN_SPEED : cur->data.dy * 2;
+        }
         cur = cur->next;
     }
     printInfoBall(head);
 }
 
-void slowDownBalls(BallListNode* head) {
+void speedDownBalls(BallListNode* head, int owner_id) {
     BallListNode* cur = head;
     while (cur != NULL) {
-        if (cur->data.dx > 0)
-            cur->data.dx = (cur->data.dx > 1) ? cur->data.dx / 2 : 1;
-        else if (cur->data.dx < 0)
+        if(cur->data.owner_id == owner_id) {
+            if (cur->data.dx > 0)
+                cur->data.dx = (cur->data.dx > 1) ? cur->data.dx / 2 : 1;
+            else if (cur->data.dx < 0)
             cur->data.dx = (cur->data.dx < -1) ? cur->data.dx / 2 : -1;
 
-        if (cur->data.dy > 0)
-            cur->data.dy = (cur->data.dy > 1) ? cur->data.dy / 2 : 1;
-        else if (cur->data.dy < 0)
-            cur->data.dy = (cur->data.dy < -1) ? cur->data.dy / 2 : -1;
-
+            if (cur->data.dy > 0)
+                cur->data.dy = (cur->data.dy > 1) ? cur->data.dy / 2 : 1;
+            else if (cur->data.dy < 0)
+                cur->data.dy = (cur->data.dy < -1) ? cur->data.dy / 2 : -1;
+        }
         cur = cur->next;
     }
     printInfoBall(head);
@@ -128,10 +107,10 @@ void printInfoBall(BallListNode *head) {
 
     printf("\n................................... \n");
     while (cur) {
-        printf("ID: %d,  x : %.1f,  y : %.1f, dx : %d, dy : %d, RGB : (%d, %d, %d)\n",
+        printf("ID: %d,  x : %.1f,  y : %.1f, dx : %d, dy : %d, owner_id : %d, RGB : (%d, %d, %d)\n",
                cur->data.id, cur->data.x, cur->data.y,
                cur->data.dx, cur->data.dy,
-               cur->data.color.r, cur->data.color.g, cur->data.color.b);
+               cur->data.owner_id, cur->data.color.r, cur->data.color.g, cur->data.color.b);
 
         cur = cur->next;
         i++;

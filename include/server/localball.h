@@ -40,6 +40,7 @@ typedef struct {
     int x, y;          ///< Screen coordinates in pixels
     int dx, dy;        ///< Velocity components in pixels per frame
     int radius;        ///< Radius in pixels
+    int owner_id;      ///< Owner ID of the ball
     RGBColor color;    ///< Color information for the ball
 } ScreenBall;
 
@@ -56,6 +57,7 @@ typedef struct {
     float x, y;        ///< Logical center position (0.0 ~ 1000.0)
     int dx, dy;        ///< Velocity components
     int radius;        ///< Logical radius (in logical coordinate units)
+    int owner_id;      ///< Owner ID of the ball
     RGBColor color;    ///< Color information for the ball
 } LogicalBall;
 
@@ -70,7 +72,18 @@ typedef struct {
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-LogicalBall create_logical_ball(int id, int radius);
+LogicalBall create_logical_ball(int id, int radius, int owner_id);
+
+/**
+ * @brief Gets the color of a ball based on its owner ID
+ * @param owner_id The ID of the ball's owner
+ * @return A RGBColor structure representing the ball's color
+ * @details Returns a color based on the owner ID, with a default fallback color
+ *          if the ID is not recognized.
+ * @date 2025-04-07
+ * @author Kim Hyo Jin
+ */
+RGBColor get_color_by_owner(int owner_id);  
 
 /**
  * @brief Moves a ball in the logical coordinate system
