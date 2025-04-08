@@ -92,26 +92,35 @@ char parseCommand(const char* cmdStr, int* ball_count, int* radius) {
     return 0;
 }
 
-// 공 리스트를 문자열로 직렬화하여 모든 클라이언트에 전송
 void broadcast_ball_state(ClientListManager* client_mgr, BallListManager* ball_mgr) {
     pthread_mutex_lock(&client_mgr->mutex_client);
     ClientNode* curr = client_mgr->head;
+    int n = 0;
+
+    pthread_mutex_lock(&ball_mgr->mutex_ball);
     while (curr) {
 
         // owner_id == csock fd
-        int owner_id = curr->ctx.csock;
-        pthread_mutex_lock(&ball_mgr->mutex_ball);
-        char* data = serialize_ball_list(ball_mgr, owner_id);
-        pthread_mutex_unlock(&ball_mgr->mutex_ball);
-        if(send(curr->ctx.csock, data, strlen(data), 0) <= 0)
+        char* data = serialize_ball_list(ball_mgr, curr->ctx.csock);
+        n = send(curr->ctx.csock, data, strlen(data), 0);
+        if(n < 0)
         {
-            printf(COLOR_RED "[Server] Failed to send data to client (fd=%d)" COLOR_RESET, curr->ctx.csock);
+            perror("send()");
+            printf(COLOR_RED "[Server] Failed to send data to client (fd=%d)\n" COLOR_RESET, curr->ctx.csock);
+            free(data);
+            continue;
         }
-
+        else if(n == 0)
+        {
+            printf(COLOR_RED "[Server] Sent 0 bytes to client (fd=%d)\n" COLOR_RESET, curr->ctx.csock);
+            free(data);
+            continue;
+        }
         free(data);
 
         curr = curr->next;
     }
+    pthread_mutex_unlock(&ball_mgr->mutex_ball);
     pthread_mutex_unlock(&client_mgr->mutex_client);
 
 }

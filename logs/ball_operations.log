@@ -1,27 +1,3 @@
-=== Ball Operations Log (Started at Apr  7 2025 16:01:59) ===
-[Mon Apr  7 17:09:54 2025] [INFO] Client FD: 5, Action: New client connected, Count: 0, Details: IP: 127.0.0.1, Port: 53646
-[Mon Apr  7 17:09:58 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5, Action: ADD, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:09:59 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5, Action: ADD, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:00 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5, Action: ADD, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:06 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5, Action: DEL, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:06 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5, Action: DEL, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:07 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5, Action: DEL, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:12 2025] [INFO] Client FD: 6, Action: New client connected, Count: 0, Details: IP: 127.0.0.1, Port: 35164
-[Mon Apr  7 17:10:20 2025] [INFO] Client FD: 6, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 6, Action: ADD, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:21 2025] [INFO] Client FD: 6, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 6, Action: ADD, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:22 2025] [INFO] Client FD: 6, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 6, Action: ADD, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:23 2025] [INFO] Client FD: 6, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 6, Action: ADD, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:10:24 2025] [INFO] Client FD: 6, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 6, Action: ADD, Count: 1, Memory: 40 bytes
-
-[Mon Apr  7 17:12:38 2025] [INFO] Client FD: 5, Action: Client disconnected, Count: 0, Details: Reason: Client requested disconnect
-[Mon Apr  7 17:13:16 2025] [INFO] Client FD: 6, Action: Client disconnected, Count: 0, Details: Reason: Client requested disconnect
+=== Ball Operations Log (Started at Apr  8 2025 12:55:24) ===
+[Tue Apr  8 12:56:10 2025] [INFO] Client FD: 5, Action: New client connected, Count: 0, Details: IP: 127.0.0.1, Port: 44568
+[Tue Apr  8 12:57:17 2025] [INFO] Client FD: 5, Action: Client disconnected, Count: 0, Details: Reason: Client requested disconnect

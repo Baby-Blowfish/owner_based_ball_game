@@ -131,7 +131,7 @@ char* serialize_ball_list(BallListManager* manager, int owner_id) {
         if(cur->data.owner_id == owner_id) {
             char temp[256];
             snprintf(temp, sizeof(temp), "%d,%.2f,%.2f,%d,%d,%d,%hhu,%hhu,%hhu|",
-                 cur->data.id,
+                 cur->data.owner_id,
                  cur->data.x, cur->data.y,
                  cur->data.dx, cur->data.dy,
                  cur->data.radius,

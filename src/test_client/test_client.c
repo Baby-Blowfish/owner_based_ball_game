@@ -79,36 +79,52 @@ void* render_thread(void* arg) {
     return NULL;
 }
 
-
 void* socket_recv_thread(void* arg) {
     
     SharedContext* ctx = (SharedContext*)arg;
 
     char recv_buf[BUFSIZ];
 
+    fd_set read_fds;
+    struct timeval tv;
+    tv.tv_sec = 0;
+    tv.tv_usec = 100000; // 100ms
+
     while(keep_running)
     {
-        memset(recv_buf, 0, sizeof(recv_buf));
-        int len = recv(ctx->socket_fd, recv_buf, sizeof(recv_buf)-1, 0);
-        recv_buf[len] = '\0';
-        if (len <= 0) {
-            perror("recv()");
-            printf("[Client] Server disconnected (fd=%d)\n", ctx->socket_fd);
-            keep_running = 0;
-            break;
-        }
+        FD_ZERO(&read_fds);
+        FD_SET(ctx->socket_fd, &read_fds);
 
-        if (len >= BUFSIZ - 1) {
-            printf(COLOR_RED "[Warning] Received buffer is full. Data may be truncated!\n" COLOR_RESET);
+        if (select(ctx->socket_fd + 1, &read_fds, NULL, NULL, &tv) > 0) {
+            if (FD_ISSET(ctx->socket_fd, &read_fds)) {
+                
+                memset(recv_buf, 0, sizeof(recv_buf));
+                int len = recv(ctx->socket_fd, recv_buf, sizeof(recv_buf)-1, 0);
+                recv_buf[len] = '\0';
+                
+                if (len <= 0) {
+                    perror("recv()");
+                    printf("[Client] Server disconnected (fd=%d)\n", ctx->socket_fd);
+                    keep_running = 0;
+                    break;
+                }
+                
+                if (len >= BUFSIZ - 1) {
+                    printf(COLOR_RED "[Warning] Received buffer is full. Data may be truncated!\n" COLOR_RESET);
+                }
+                
+                pthread_mutex_lock(&ctx->ball_list_manager->mutex_ball);
+                updateBallListFromSerialized(ctx->ball_list_manager, recv_buf, ctx->framebuffer->vinfo.xres, ctx->framebuffer->vinfo.yres);
+                pthread_mutex_unlock(&ctx->ball_list_manager->mutex_ball);
+ 
+            } 
+            
         }
-
-        pthread_mutex_lock(&ctx->ball_list_manager->mutex_ball);
-        updateBallListFromSerialized(ctx->ball_list_manager, recv_buf, ctx->framebuffer->vinfo.xres, ctx->framebuffer->vinfo.yres);
-        pthread_mutex_unlock(&ctx->ball_list_manager->mutex_ball);
-    }
+   }
     printf(COLOR_GREEN "[Client] Socket Recv Thread Shutting down..." COLOR_RESET);
     pthread_exit(NULL);
 }
+
 
 // 클라이언트 ->  서버 송신 스레드 : 입력  명령 받기 및 전송
 void* socket_send_thread(void* arg) {

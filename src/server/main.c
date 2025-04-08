@@ -123,7 +123,9 @@ int main(void)
                     pthread_mutex_lock(&arg->client_list_manager->mutex_client);
                     arg->client_list_manager->client_count++;
                     pthread_mutex_unlock(&arg->client_list_manager->mutex_client);
-                    log_client_connect(csock, &cliaddr);    
+                    log_client_connect(csock, &cliaddr);
+                    add_ball(arg->ball_list_manager, START_BALL_COUNT, START_BALL_RADIUS, csock);   // 초기 공 생성
+                    log_ball_memory_usage(arg->ball_list_manager, "ADD", csock, START_BALL_COUNT);
                 }
             } else if (events[i].events & EPOLLIN) {
                 char buf[BUFSIZ];
@@ -132,16 +134,28 @@ int main(void)
 
                 if (len <= 0) {
                     printf("[Server] Client disconnected (fd=%d)\n", fd);
-                    epoll_ctl(epfd, EPOLL_CTL_DEL, fd, NULL);
+                    log_client_disconnect(fd, "Client requested disconnect");
 
+                    pthread_mutex_lock(&arg->client_list_manager->mutex_client);
                     ClientNode* removed = remove_client_by_socket(fd, &arg->client_list_manager->head, &arg->client_list_manager->tail);
                     if (removed) {
+                        arg->client_list_manager->client_count--;
+                        epoll_ctl(epfd, EPOLL_CTL_DEL, fd, NULL);
                         shutdown(removed->ctx.csock, SHUT_RDWR);
                         close(removed->ctx.csock);
                         free(removed);
                     }
-                } else {
+                    pthread_mutex_unlock(&arg->client_list_manager->mutex_client);
+
+                    pthread_mutex_lock(&arg->ball_list_manager->mutex_ball);
+                    delete_ball_by_socket(arg->ball_list_manager, fd);
+                    int now_count = count_ball_by_owner(arg->ball_list_manager->head, fd);
+                    log_ball_memory_usage(arg->ball_list_manager, "DEL", fd, now_count);
+                    pthread_mutex_unlock(&arg->ball_list_manager->mutex_ball);
                     printf("[Server] Received from fd %d: %s\n", fd, buf);
+                }
+                else
+                {
                     // enqueue to task queue
                     Task task;
                     task.fd = fd;
