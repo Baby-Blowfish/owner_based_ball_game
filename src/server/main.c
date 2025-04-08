@@ -122,18 +122,21 @@ int main(void)
                     add_client(arg->client_list_manager, csock, cliaddr);
                     pthread_mutex_lock(&arg->client_list_manager->mutex_client);
                     arg->client_list_manager->client_count++;
-                    pthread_mutex_unlock(&arg->client_list_manager->mutex_client);
                     log_client_connect(csock, &cliaddr);
+                    pthread_mutex_unlock(&arg->client_list_manager->mutex_client);
+                    pthread_mutex_lock(&arg->ball_list_manager->mutex_ball);
                     add_ball(arg->ball_list_manager, START_BALL_COUNT, START_BALL_RADIUS, csock);   // 초기 공 생성
                     log_ball_memory_usage(arg->ball_list_manager, "ADD", csock, START_BALL_COUNT);
+                    pthread_mutex_unlock(&arg->ball_list_manager->mutex_ball);
                 }
             } else if (events[i].events & EPOLLIN) {
                 char buf[BUFSIZ];
                 memset(buf, 0, sizeof(buf));
                 int len = recv(fd, buf, sizeof(buf), 0);
+                buf[len] = '\0';
 
                 if (len <= 0) {
-                    printf("[Server] Client disconnected (fd=%d)\n", fd);
+                    printf(COLOR_RED "[Server] Client disconnected (fd=%d)\n" COLOR_RESET, fd);
                     log_client_disconnect(fd, "Client requested disconnect");
 
                     pthread_mutex_lock(&arg->client_list_manager->mutex_client);
@@ -152,7 +155,6 @@ int main(void)
                     int now_count = count_ball_by_owner(arg->ball_list_manager->head, fd);
                     log_ball_memory_usage(arg->ball_list_manager, "DEL", fd, now_count);
                     pthread_mutex_unlock(&arg->ball_list_manager->mutex_ball);
-                    printf("[Server] Received from fd %d: %s\n", fd, buf);
                 }
                 else
                 {
@@ -162,7 +164,7 @@ int main(void)
                     memcpy(task.data, buf, len);
                     task.length = len;
                     task_queue_push(arg->task_queue, task);  
-                    printf("[Server] Enqueued task for fd %d\n", fd);
+                    printf(COLOR_CYAN "[Server] Enqueued task for fd %d : %s\n" COLOR_RESET, fd, buf);
                 }
             }
         }

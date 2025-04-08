@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['screensize_371',['screensize',['../structdev__fb__t.html#a29befe07b88975030a81f16b17c5a836',1,'dev_fb_t']]],
-  ['socket_5ffd_372',['socket_fd',['../structSharedContext.html#a86b786e53d10d939506dfd315ba21c70',1,'SharedContext']]]
+  ['r_375',['r',['../structRGBColor.html#a60d4e7624380517c8b7993e1fbb602c8',1,'RGBColor']]],
+  ['radius_376',['radius',['../structScreenBall.html#ae6b6451bb35a2a87dafc0b3103c80634',1,'ScreenBall::radius()'],['../structLogicalBall.html#a8517bcdef43bde4fd4ec182bde8eed41',1,'LogicalBall::radius()']]],
+  ['rear_377',['rear',['../structTaskQueue.html#a1cef5f52644c72ad2dee2540b26039a9',1,'TaskQueue']]]
 ];

@@ -29,7 +29,6 @@ BallListNode* appendBall(BallListNode* head, BallListNode** tail, LogicalBall ba
     *tail = newnode;
   }
 
-  printf(COLOR_GREEN "[Success] '%d' added successfully." COLOR_RESET, ball.id);
   return head;
 
 }
@@ -107,10 +106,10 @@ void printInfoBall(BallListNode *head) {
 
     printf("\n................................... \n");
     while (cur) {
-        printf("ID: %d,  x : %.1f,  y : %.1f, dx : %d, dy : %d, owner_id : %d, RGB : (%d, %d, %d)\n",
-               cur->data.id, cur->data.x, cur->data.y,
+        printf("FD: %d, ID: %d,  x : %.1f,  y : %.1f, dx : %d, dy : %d, RGB : (%d, %d, %d)\n",
+               cur->data.owner_id, cur->data.id, cur->data.x, cur->data.y,
                cur->data.dx, cur->data.dy,
-               cur->data.owner_id, cur->data.color.r, cur->data.color.g, cur->data.color.b);
+               cur->data.color.r, cur->data.color.g, cur->data.color.b);
 
         cur = cur->next;
         i++;

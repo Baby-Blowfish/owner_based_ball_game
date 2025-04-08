@@ -93,36 +93,42 @@ char parseCommand(const char* cmdStr, int* ball_count, int* radius) {
 }
 
 void broadcast_ball_state(ClientListManager* client_mgr, BallListManager* ball_mgr) {
-    pthread_mutex_lock(&client_mgr->mutex_client);
     ClientNode* curr = client_mgr->head;
     int n = 0;
 
-    pthread_mutex_lock(&ball_mgr->mutex_ball);
     while (curr) {
 
         // owner_id == csock fd
         char* data = serialize_ball_list(ball_mgr, curr->ctx.csock);
-        n = send(curr->ctx.csock, data, strlen(data), 0);
+        
+        if((data != NULL) && (strlen(data) > 0))
+        {
+            n = send(curr->ctx.csock, data, strlen(data), 0);
+        }
+        else {
+            curr = curr->next;
+            continue;  // 클라이언트는 접속했지만 공이 없는 경우
+        }
+
         if(n < 0)
         {
             perror("send()");
             printf(COLOR_RED "[Server] Failed to send data to client (fd=%d)\n" COLOR_RESET, curr->ctx.csock);
             free(data);
+            curr = curr->next;
             continue;
         }
         else if(n == 0)
         {
             printf(COLOR_RED "[Server] Sent 0 bytes to client (fd=%d)\n" COLOR_RESET, curr->ctx.csock);
             free(data);
+            curr = curr->next;
             continue;
         }
         free(data);
 
         curr = curr->next;
     }
-    pthread_mutex_unlock(&ball_mgr->mutex_ball);
-    pthread_mutex_unlock(&client_mgr->mutex_client);
-
 }
 
 void log_client_connect(int fd, struct sockaddr_in* cliaddr) {
@@ -153,7 +159,7 @@ void* worker_thread(void* arg) {
         Task task = task_queue_pop(ctx->task_queue);
         task.data[task.length] = '\0'; // 수신한 데이터 null-terminate 보장
 
-        printf(COLOR_BLUE "[Worker] Processing task from fd %d: %s" COLOR_RESET, task.fd, task.data);
+        printf(COLOR_BLUE "[Worker] Processing task from fd %d" COLOR_RESET, task.fd);
 
         char cmd = parseCommand(task.data, &count, &radius);
 
@@ -225,9 +231,13 @@ void* cycle_broadcast_ball_state(void* arg) {
     while (keep_running) {
         usleep(30000); // 약 33 FPS
         pthread_mutex_lock(&ctx->ball_list_manager->mutex_ball);
+        pthread_mutex_unlock(&ctx->client_list_manager->mutex_client);
+
         move_all_ball(ctx->ball_list_manager);
-        pthread_mutex_unlock(&ctx->ball_list_manager->mutex_ball);
         broadcast_ball_state(ctx->client_list_manager, ctx->ball_list_manager);
+        
+        pthread_mutex_unlock(&ctx->ball_list_manager->mutex_ball);
+        pthread_mutex_unlock(&ctx->client_list_manager->mutex_client);
     }
     printf(COLOR_GREEN "[Cycle Broadcast] Thread Shutting down..." COLOR_RESET);
     return NULL;

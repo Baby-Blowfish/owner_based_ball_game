@@ -96,30 +96,37 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">int</span> x, y;          </div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">int</span> dx, dy;        </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">int</span> radius;        </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <a class="code" href="structRGBColor.html">RGBColor</a> color;    </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;} <a class="code" href="structScreenBall.html">ScreenBall</a>;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="structScreenBall.html#a78c032273c6871b0cc6ebb36d88871e1">   43</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structScreenBall.html#a78c032273c6871b0cc6ebb36d88871e1">owner_id</a>;      </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <a class="code" href="structRGBColor.html">RGBColor</a> color;    </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} <a class="code" href="structScreenBall.html">ScreenBall</a>;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">int</span> id;            </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">float</span> x, y;        </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">int</span> dx, dy;        </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">int</span> radius;        </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="structRGBColor.html">RGBColor</a> color;    </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;} <a class="code" href="structLogicalBall.html">LogicalBall</a>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<a class="code" href="structLogicalBall.html">LogicalBall</a> <a class="code" href="localball_8h.html#ae6c7e9f42e932b6f8a6420b23beda276">create_logical_ball</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> radius);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">void</span> <a class="code" href="localball_8h.html#aeb29dc58260b32c5b6c26f68cd764d48">move_logical_ball</a>(<a class="code" href="structLogicalBall.html">LogicalBall</a> *b);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif // LOCAL_BALL_H</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">int</span> id;            </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">float</span> x, y;        </div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">int</span> dx, dy;        </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">int</span> radius;        </div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structLogicalBall.html#a2da74bb0e6368d3b60c5f4068b9d5650">   60</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structLogicalBall.html#a2da74bb0e6368d3b60c5f4068b9d5650">owner_id</a>;      </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="structRGBColor.html">RGBColor</a> color;    </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;} <a class="code" href="structLogicalBall.html">LogicalBall</a>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<a class="code" href="structLogicalBall.html">LogicalBall</a> <a class="code" href="localball_8h.html#aecaa9ba3ea54f0dad619f086b1444838">create_logical_ball</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <span class="keywordtype">int</span> radius, <span class="keywordtype">int</span> owner_id);</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<a class="code" href="structRGBColor.html">RGBColor</a> <a class="code" href="localball_8h.html#a31a35c30e6be9466befcc6faacb55d38">get_color_by_owner</a>(<span class="keywordtype">int</span> owner_id);  </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keywordtype">void</span> <a class="code" href="localball_8h.html#aeb29dc58260b32c5b6c26f68cd764d48">move_logical_ball</a>(<a class="code" href="structLogicalBall.html">LogicalBall</a> *b);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif // LOCAL_BALL_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="alocalball_8h_html_a31a35c30e6be9466befcc6faacb55d38"><div class="ttname"><a href="localball_8h.html#a31a35c30e6be9466befcc6faacb55d38">get_color_by_owner</a></div><div class="ttdeci">RGBColor get_color_by_owner(int owner_id)</div><div class="ttdoc">Gets the color of a ball based on its owner ID.</div><div class="ttdef"><b>Definition:</b> loaclball.c:23</div></div>
 <div class="ttc" id="astructRGBColor_html"><div class="ttname"><a href="structRGBColor.html">RGBColor</a></div><div class="ttdoc">Structure representing RGB color information.</div><div class="ttdef"><b>Definition:</b> screenball.h:22</div></div>
-<div class="ttc" id="alocalball_8h_html_ae6c7e9f42e932b6f8a6420b23beda276"><div class="ttname"><a href="localball_8h.html#ae6c7e9f42e932b6f8a6420b23beda276">create_logical_ball</a></div><div class="ttdeci">LogicalBall create_logical_ball(int id, int radius)</div><div class="ttdoc">Creates a ball in the logical coordinate system.</div><div class="ttdef"><b>Definition:</b> loaclball.c:3</div></div>
+<div class="ttc" id="astructLogicalBall_html_a2da74bb0e6368d3b60c5f4068b9d5650"><div class="ttname"><a href="structLogicalBall.html#a2da74bb0e6368d3b60c5f4068b9d5650">LogicalBall::owner_id</a></div><div class="ttdeci">int owner_id</div><div class="ttdoc">Owner ID of the ball.</div><div class="ttdef"><b>Definition:</b> localball.h:60</div></div>
+<div class="ttc" id="astructScreenBall_html_a78c032273c6871b0cc6ebb36d88871e1"><div class="ttname"><a href="structScreenBall.html#a78c032273c6871b0cc6ebb36d88871e1">ScreenBall::owner_id</a></div><div class="ttdeci">int owner_id</div><div class="ttdoc">Owner ID of the ball.</div><div class="ttdef"><b>Definition:</b> localball.h:43</div></div>
 <div class="ttc" id="astructLogicalBall_html"><div class="ttname"><a href="structLogicalBall.html">LogicalBall</a></div><div class="ttdoc">Structure representing a single ball object (server-side)</div><div class="ttdef"><b>Definition:</b> screenball.h:48</div></div>
-<div class="ttc" id="alocalball_8h_html_aeb29dc58260b32c5b6c26f68cd764d48"><div class="ttname"><a href="localball_8h.html#aeb29dc58260b32c5b6c26f68cd764d48">move_logical_ball</a></div><div class="ttdeci">void move_logical_ball(LogicalBall *b)</div><div class="ttdoc">Moves a ball in the logical coordinate system.</div><div class="ttdef"><b>Definition:</b> loaclball.c:24</div></div>
+<div class="ttc" id="alocalball_8h_html_aeb29dc58260b32c5b6c26f68cd764d48"><div class="ttname"><a href="localball_8h.html#aeb29dc58260b32c5b6c26f68cd764d48">move_logical_ball</a></div><div class="ttdeci">void move_logical_ball(LogicalBall *b)</div><div class="ttdoc">Moves a ball in the logical coordinate system.</div><div class="ttdef"><b>Definition:</b> loaclball.c:35</div></div>
 <div class="ttc" id="aconsole__color_8h_html"><div class="ttname"><a href="console__color_8h.html">console_color.h</a></div></div>
 <div class="ttc" id="astructScreenBall_html"><div class="ttname"><a href="structScreenBall.html">ScreenBall</a></div><div class="ttdoc">Ball structure for screen display in client resolution.</div><div class="ttdef"><b>Definition:</b> screenball.h:34</div></div>
+<div class="ttc" id="alocalball_8h_html_aecaa9ba3ea54f0dad619f086b1444838"><div class="ttname"><a href="localball_8h.html#aecaa9ba3ea54f0dad619f086b1444838">create_logical_ball</a></div><div class="ttdeci">LogicalBall create_logical_ball(int id, int radius, int owner_id)</div><div class="ttdoc">Creates a ball in the logical coordinate system.</div><div class="ttdef"><b>Definition:</b> loaclball.c:3</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

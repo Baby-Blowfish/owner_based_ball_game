@@ -95,16 +95,19 @@ Include dependency graph for loaclball.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae6c7e9f42e932b6f8a6420b23beda276"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLogicalBall.html">LogicalBall</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loaclball_8c.html#ae6c7e9f42e932b6f8a6420b23beda276">create_logical_ball</a> (int id, int radius)</td></tr>
-<tr class="memdesc:ae6c7e9f42e932b6f8a6420b23beda276"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a ball in the logical coordinate system.  <a href="loaclball_8c.html#ae6c7e9f42e932b6f8a6420b23beda276">More...</a><br /></td></tr>
-<tr class="separator:ae6c7e9f42e932b6f8a6420b23beda276"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecaa9ba3ea54f0dad619f086b1444838"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLogicalBall.html">LogicalBall</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loaclball_8c.html#aecaa9ba3ea54f0dad619f086b1444838">create_logical_ball</a> (int id, int radius, int owner_id)</td></tr>
+<tr class="memdesc:aecaa9ba3ea54f0dad619f086b1444838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a ball in the logical coordinate system.  <a href="loaclball_8c.html#aecaa9ba3ea54f0dad619f086b1444838">More...</a><br /></td></tr>
+<tr class="separator:aecaa9ba3ea54f0dad619f086b1444838"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31a35c30e6be9466befcc6faacb55d38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structRGBColor.html">RGBColor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loaclball_8c.html#a31a35c30e6be9466befcc6faacb55d38">get_color_by_owner</a> (int owner_id)</td></tr>
+<tr class="memdesc:a31a35c30e6be9466befcc6faacb55d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the color of a ball based on its owner ID.  <a href="loaclball_8c.html#a31a35c30e6be9466befcc6faacb55d38">More...</a><br /></td></tr>
+<tr class="separator:a31a35c30e6be9466befcc6faacb55d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb29dc58260b32c5b6c26f68cd764d48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loaclball_8c.html#aeb29dc58260b32c5b6c26f68cd764d48">move_logical_ball</a> (<a class="el" href="structLogicalBall.html">LogicalBall</a> *b)</td></tr>
 <tr class="memdesc:aeb29dc58260b32c5b6c26f68cd764d48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a ball in the logical coordinate system.  <a href="loaclball_8c.html#aeb29dc58260b32c5b6c26f68cd764d48">More...</a><br /></td></tr>
 <tr class="separator:aeb29dc58260b32c5b6c26f68cd764d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ae6c7e9f42e932b6f8a6420b23beda276"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6c7e9f42e932b6f8a6420b23beda276">&#9670;&nbsp;</a></span>create_logical_ball()</h2>
+<a id="aecaa9ba3ea54f0dad619f086b1444838"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecaa9ba3ea54f0dad619f086b1444838">&#9670;&nbsp;</a></span>create_logical_ball()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -119,7 +122,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>radius</em>&#160;</td>
+          <td class="paramname"><em>radius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>owner_id</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -139,6 +148,35 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A newly created <a class="el" href="structLogicalBall.html" title="Structure representing a single ball object (server-side)">LogicalBall</a> object</dd></dl>
 <p>Creates a new ball with the specified ID and radius, initializes its position to a random location within the logical coordinate space, sets a random velocity, and assigns a random color. </p><dl class="section date"><dt>Date</dt><dd>2025-04-07 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Kim Hyo Jin </dd></dl>
+
+</div>
+</div>
+<a id="a31a35c30e6be9466befcc6faacb55d38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31a35c30e6be9466befcc6faacb55d38">&#9670;&nbsp;</a></span>get_color_by_owner()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structRGBColor.html">RGBColor</a> get_color_by_owner </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>owner_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the color of a ball based on its owner ID. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">owner_id</td><td>The ID of the ball's owner </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structRGBColor.html" title="Structure representing RGB color information.">RGBColor</a> structure representing the ball's color</dd></dl>
+<p>Returns a color based on the owner ID, with a default fallback color if the ID is not recognized. </p><dl class="section date"><dt>Date</dt><dd>2025-04-07 </dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Kim Hyo Jin </dd></dl>
 
 </div>

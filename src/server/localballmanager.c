@@ -21,6 +21,7 @@ void add_ball(BallListManager* manager, int count, int radius, int owner_id) {
         LogicalBall b = create_logical_ball(manager->total_count++,radius, owner_id);
         manager->head = appendBall(manager->head, &manager->tail, b);
     }
+    printf(COLOR_GREEN "[Success] fd[%d]: '%d' added successfully." COLOR_RESET, owner_id, count);
     printInfoBall(manager->head);
 }
 
@@ -160,11 +161,9 @@ void log_ball_memory_usage(BallListManager* manager, const char* action, int fd,
     size_t unit_mem = sizeof(BallListNode);
     size_t delta_mem = unit_mem * count;
 
-    pthread_mutex_lock(&manager->mutex_ball);
     // 현재 전체 공 개수 (이후 기준)
     int now_count = count_ball_by_owner(manager->head, fd);
     size_t now_mem = now_count * unit_mem;
-    pthread_mutex_unlock(&manager->mutex_ball);
 
     char details[256];
     snprintf(details, sizeof(details),

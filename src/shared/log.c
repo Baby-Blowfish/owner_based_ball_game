@@ -21,8 +21,6 @@ void log_event(LogLevel level, const char* action, int fd, int count, const char
         default:          level_str = "UNKNOWN"; break;
     }
     
-    printf("[%s] [%s] Client FD: %d, Action: %s, Count: %d, Details: %s\n",
-           timestamp, level_str, fd, action, count, details);
     
     FILE* log_file = fopen("logs/ball_operations.log", "a");
     if (log_file) {

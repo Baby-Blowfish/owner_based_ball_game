@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['worker_5fthread_206',['worker_thread',['../server_8h.html#a39b4d7ca2619ae96920c437df5ab9ece',1,'worker_thread(void *arg):&#160;server.c'],['../server_8c.html#a39b4d7ca2619ae96920c437df5ab9ece',1,'worker_thread(void *arg):&#160;server.c']]]
+  ['vinfo_208',['vinfo',['../structdev__fb__t.html#ab3ac4d607c720165fdc7a04a1a2a3321',1,'dev_fb_t']]]
 ];

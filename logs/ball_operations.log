@@ -1,3 +1,19 @@
-=== Ball Operations Log (Started at Apr  8 2025 12:55:24) ===
-[Tue Apr  8 12:56:10 2025] [INFO] Client FD: 5, Action: New client connected, Count: 0, Details: IP: 127.0.0.1, Port: 44568
-[Tue Apr  8 12:57:17 2025] [INFO] Client FD: 5, Action: Client disconnected, Count: 0, Details: Reason: Client requested disconnect
+=== Ball Operations Log (Started at Apr  8 2025 13:56:12) ===
+[Tue Apr  8 14:02:15 2025] [INFO] Client FD: 5, Action: New client connected, Count: 0, Details: IP: 127.0.0.1, Port: 47620
+[Tue Apr  8 14:02:15 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 5, Details: [Log] Client FD: 5 | Action: ADD | Count: 5 | ΔMemory: 200 bytes | Now: 5 balls (Total: 200 bytes)
+
+[Tue Apr  8 14:02:17 2025] [INFO] Client FD: 5, Action: Client disconnected, Count: 0, Details: Reason: Client requested disconnect
+[Tue Apr  8 14:02:17 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 0, Details: [Log] Client FD: 5 | Action: DEL | Count: 0 | ΔMemory: 0 bytes | Now: 0 balls (Total: 0 bytes)
+
+[Tue Apr  8 14:02:20 2025] [INFO] Client FD: 5, Action: New client connected, Count: 0, Details: IP: 127.0.0.1, Port: 41114
+[Tue Apr  8 14:02:20 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 5, Details: [Log] Client FD: 5 | Action: ADD | Count: 5 | ΔMemory: 200 bytes | Now: 5 balls (Total: 200 bytes)
+
+[Tue Apr  8 14:02:21 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5 | Action: ADD | Count: 1 | ΔMemory: 40 bytes | Now: 6 balls (Total: 240 bytes)
+
+[Tue Apr  8 14:02:21 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5 | Action: ADD | Count: 1 | ΔMemory: 40 bytes | Now: 7 balls (Total: 280 bytes)
+
+[Tue Apr  8 14:02:21 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 1, Details: [Log] Client FD: 5 | Action: ADD | Count: 1 | ΔMemory: 40 bytes | Now: 8 balls (Total: 320 bytes)
+
+[Tue Apr  8 14:02:21 2025] [INFO] Client FD: 5, Action: Client disconnected, Count: 0, Details: Reason: Client requested disconnect
+[Tue Apr  8 14:02:21 2025] [INFO] Client FD: 5, Action: Ball memory usage, Count: 0, Details: [Log] Client FD: 5 | Action: DEL | Count: 0 | ΔMemory: 0 bytes | Now: 0 balls (Total: 0 bytes)
+
