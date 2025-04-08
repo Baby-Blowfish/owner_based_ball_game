@@ -94,24 +94,27 @@ char parseCommand(const char* cmdStr, int* ball_count, int* radius) {
 
 // 공 리스트를 문자열로 직렬화하여 모든 클라이언트에 전송
 void broadcast_ball_state(ClientListManager* client_mgr, BallListManager* ball_mgr) {
-   
-    pthread_mutex_lock(&ball_mgr->mutex_ball);
-    char* buffer  = serialize_ball_list(ball_mgr);
-    pthread_mutex_unlock(&ball_mgr->mutex_ball);
-
-    if(!buffer) return;
-    
     pthread_mutex_lock(&client_mgr->mutex_client);
     ClientNode* curr = client_mgr->head;
     while (curr) {
-        send(curr->ctx.csock, buffer, strlen(buffer), 0);
+
+        // owner_id == csock fd
+        int owner_id = curr->ctx.csock;
+        pthread_mutex_lock(&ball_mgr->mutex_ball);
+        char* data = serialize_ball_list(ball_mgr, owner_id);
+        pthread_mutex_unlock(&ball_mgr->mutex_ball);
+        if(send(curr->ctx.csock, data, strlen(data), 0) <= 0)
+        {
+            printf(COLOR_RED "[Server] Failed to send data to client (fd=%d)" COLOR_RESET, curr->ctx.csock);
+        }
+
+        free(data);
+
         curr = curr->next;
     }
     pthread_mutex_unlock(&client_mgr->mutex_client);
 
-    free(buffer);
 }
-
 
 void log_client_connect(int fd, struct sockaddr_in* cliaddr) {
     char ip[INET_ADDRSTRLEN];
@@ -129,14 +132,6 @@ void log_client_disconnect(int fd, const char* reason) {
     log_event(LOG_INFO, "Client disconnected", fd, 0, details);
 }
 
-// 공 생성/삭제 이벤트 로깅 함수
-void log_ball_memory_usage(const char* action, int fd, int count) {
-    size_t mem = sizeof(BallListNode) * count;
-    char details[100];
-    sprintf(details, "[Log] Client FD: %d, Action: %s, Count: %d, Memory: %zu bytes\n",
-           fd, action, count, mem);
-    log_event(LOG_INFO, "Ball memory usage", fd, count, details);
-}
 
 // Worker thread 루프
 void* worker_thread(void* arg) {
@@ -177,29 +172,24 @@ void* worker_thread(void* arg) {
             }
             pthread_mutex_unlock(&ctx->client_list_manager->mutex_client);
 
+            pthread_mutex_lock(&ctx->ball_list_manager->mutex_ball);
+            delete_ball_by_socket(ctx->ball_list_manager, task.fd);
+            int now_count = count_ball_by_owner(ctx->ball_list_manager->head, task.fd);
+            log_ball_memory_usage(ctx->ball_list_manager, "DEL", task.fd, now_count);
+            pthread_mutex_unlock(&ctx->ball_list_manager->mutex_ball);
             continue; // 다음 작업 처리
         }
 
         // 다른 명령이 들어왔을때 처리 필요함!
         switch (cmd) {
-            case CMD_ADD:
+            case CMD_ADD:  
             case CMD_DEL:
             case CMD_SPEED_UP:
             case CMD_SPEED_DOWN:
+                count = (count <= 0) ? 1 : count;
                 pthread_mutex_lock(&ctx->ball_list_manager->mutex_ball);
-                dispatch_command(cmd, count, radius, ctx->ball_list_manager);
+                dispatch_command(ctx->ball_list_manager, cmd, count, radius, task.fd);
                 pthread_mutex_unlock(&ctx->ball_list_manager->mutex_ball);
-                
-                if(cmd == CMD_ADD)
-                {
-                    int log_count = (count <= 0) ? 1 : count;
-                    log_ball_memory_usage("ADD", task.fd, log_count);
-                }
-                else if(cmd == CMD_DEL)
-                {
-                    int log_count = (count <= 0) ? 1 : count;
-                    log_ball_memory_usage("DEL", task.fd, log_count);
-                }
                 break;
             default:
                 {

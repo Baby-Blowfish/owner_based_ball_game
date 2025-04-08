@@ -15,8 +15,7 @@
 
 #include "console_color.h"
 #include "localball_list.h"
-
-#define FILE_NAME "data.bin"
+#include "log.h"
 
 // Command definitions
 #define CMD_ADD 'a'
@@ -51,7 +50,7 @@ typedef struct {
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-typedef void (*CommandHandler)(BallListManager*, int, int);
+typedef void (*CommandHandler)(BallListManager*, int, int, int);
 
 /**
  * @brief Structure mapping commands to their handler functions
@@ -110,6 +109,16 @@ void add_ball(BallListManager* manager, int count, int radius, int owner_id);
 void delete_ball(BallListManager* manager, int count, int owner_id);
 
 /**
+ * @brief Deletes balls from the ball list by socket
+ * @param manager Pointer to the ball list manager
+ * @param socket_fd The socket file descriptor of the client
+ * @details Deletes all balls owned by the specified client from the ball list.
+ * @date 2025-04-07
+ * @author Kim Hyo Jin
+ */
+void delete_ball_by_socket(BallListManager* manager, int socket_fd);
+
+/**
  * @brief Updates the positions of all balls
  * @param manager Pointer to the ball list manager
  * @details Updates the position and velocity of all balls in the list.
@@ -129,54 +138,76 @@ void move_all_ball(BallListManager* manager);
 char* serialize_ball_list(BallListManager* manager, int owner_id);
 
 /**
+ * @brief Counts the number of balls by owner
+ * @param head Pointer to the head of the ball list
+ * @param owner_id The owner ID of the balls
+ * @return The number of balls owned by the specified client
+ * @date 2025-04-07
+ * @author Kim Hyo Jin
+ */
+int count_ball_by_owner(BallListNode* head, int owner_id);
+
+/**
+ * @brief Logs the memory usage of the ball list
+ * @param manager Pointer to the ball list manager
+ * @param action The action being performed (e.g., "ADD", "DEL")
+ * @param fd The file descriptor of the client
+ * @param count The number of balls involved in the action
+ * @date 2025-04-07
+ * @author Kim Hyo Jin
+ */
+void log_ball_memory_usage(BallListManager* manager, const char* action, int fd, int count);
+
+/**
  * @brief Handles the add ball command
  * @param m Pointer to the ball list manager
  * @param count Number of balls to add
  * @param radius Radius of the balls to add
- * @details Processes the add ball command and logs the action.
+ * @param owner_id The owner ID of the balls
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void handle_add(BallListManager* m, int count, int radius);
+void handle_add(BallListManager* m, int count, int radius, int owner_id);
 
 /**
  * @brief Handles the delete ball command
  * @param m Pointer to the ball list manager
  * @param count Number of balls to delete
  * @param radius Unused parameter (maintained for function signature consistency)
- * @details Processes the delete ball command and logs the action.
+ * @param owner_id The owner ID of the balls
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void handle_delete(BallListManager* m, int count, int radius);
+void handle_delete(BallListManager* m, int count, int radius, int owner_id);
 
 /**
  * @brief Handles the speed up command
  * @param m Pointer to the ball list manager
  * @param count Number of balls to speed up
  * @param radius Unused parameter (maintained for function signature consistency)
- * @details Processes the speed up command.
+ * @param owner_id The owner ID of the balls
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void handle_speed_up(BallListManager* m, int count, int radius);
+void handle_speed_up(BallListManager* m, int count, int radius, int owner_id);
 
 /**
  * @brief Handles the speed down command
  * @param m Pointer to the ball list manager
  * @param count Number of balls to slow down
  * @param radius Unused parameter (maintained for function signature consistency)
- * @details Processes the speed down command.
+ * @param owner_id The owner ID of the balls
  * @date 2025-04-07
  * @author Kim Hyo Jin
  */
-void handle_speed_down(BallListManager* m, int count, int radius);
+void handle_speed_down(BallListManager* m, int count, int radius, int owner_id);
 
 /**
  * @brief Dispatches commands to their handler functions
  * @param cmd Command character to process
  * @param count Number of balls for command processing
  * @param radius Radius of balls for command processing
+ * @param owner_id The owner ID of the balls
  * @param m Pointer to the ball list manager
  * @details Calls the appropriate handler function based on the command.
  * @date 2025-04-07

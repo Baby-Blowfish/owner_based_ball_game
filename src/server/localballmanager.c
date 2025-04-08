@@ -1,7 +1,5 @@
 #include "localballmanager.h"
 
-// 로깅 함수 선언
-extern void log_ball_memory_usage(const char* action, int fd, int count);
 
 void ball_manager_init(BallListManager* manager) {
 
@@ -10,8 +8,6 @@ void ball_manager_init(BallListManager* manager) {
     manager->tail = NULL;
     manager->total_count = 0;
     pthread_mutex_init(&manager->mutex_ball, NULL);
-
-    add_ball(manager,START_BALL_COUNT,START_BALL_RADIUS);
 }
 
 void ball_manager_destroy(BallListManager* manager) {
@@ -66,23 +62,61 @@ void delete_ball(BallListManager* manager, int count, int owner_id) {
         BallListNode* target = candidates[i];
         BallListNode* target_prev = candidates_prev[i];
 
-        if (target_prev == NULL) {
+        // target이 이미 리스트에서 빠졌는지 확인
+        if (target_prev && target_prev->next != target) continue;
+
+        // head 갱신
+        if (manager->head == target) {
             manager->head = target->next;
-        } else {
+        }
+
+        // tail 갱신
+        if (manager->tail == target) {
+            manager->tail = target_prev;
+        }
+
+        // 중간 연결 제거
+        if (target_prev) {
             target_prev->next = target->next;
         }
 
-        if (manager->tail == target)
-            manager->tail = target_prev;
-
-        printf(COLOR_GREEN "[Success] '%d' Deleted (owner: %d)\n" COLOR_RESET, target->data.id, owner_id);
         free(target);
         manager->total_count--;
+        printf(COLOR_GREEN "[Success] '%d' Deleted (owner: %d)\n" COLOR_RESET, target->data.id, owner_id);
     }
+
 
     printInfoBall(manager->head);
 }
 
+void delete_ball_by_socket(BallListManager* manager, int socket_fd) {
+    BallListNode *cur = manager->head;
+    BallListNode *prev = NULL;
+
+    while (cur) {
+        BallListNode* next = cur->next;
+
+        if (cur->data.owner_id == socket_fd) {
+            if (prev == NULL) {
+                manager->head = next;
+            } else {
+                prev->next = next;
+            }
+
+            // tail이 삭제 대상이라면 tail 갱신
+            if (manager->tail == cur) {
+                manager->tail = prev;
+            }
+
+            free(cur);
+            manager->total_count--;
+        } else {
+            prev = cur;
+        }
+
+        cur = next;
+    }
+}
 
 void move_all_ball(BallListManager* manager) {
     moveBallList(manager->head);
@@ -111,17 +145,47 @@ char* serialize_ball_list(BallListManager* manager, int owner_id) {
     return buffer; // 호출자가 free 해야 함
 }
 
+int count_ball_by_owner(BallListNode* head, int owner_id) {
+    int count = 0;
+    while (head) {
+        if (head->data.owner_id == owner_id)
+            count++;
+        head = head->next;
+    }
+    return count;
+}
+
+
+void log_ball_memory_usage(BallListManager* manager, const char* action, int fd, int count) {
+    size_t unit_mem = sizeof(BallListNode);
+    size_t delta_mem = unit_mem * count;
+
+    pthread_mutex_lock(&manager->mutex_ball);
+    // 현재 전체 공 개수 (이후 기준)
+    int now_count = count_ball_by_owner(manager->head, fd);
+    size_t now_mem = now_count * unit_mem;
+    pthread_mutex_unlock(&manager->mutex_ball);
+
+    char details[256];
+    snprintf(details, sizeof(details),
+        "[Log] Client FD: %d | Action: %s | Count: %d | ΔMemory: %zu bytes | Now: %d balls (Total: %zu bytes)\n",
+        fd, action, count, delta_mem, now_count, now_mem);
+
+    log_event(LOG_INFO, "Ball memory usage", fd, count, details);
+}
 
 // 핸들러 함수 정의
 void handle_add(BallListManager* m, int count, int radius, int owner_id) {
     if (count <= 0) count = 1;
     add_ball(m,count,radius,owner_id);
+    log_ball_memory_usage(m, "ADD", owner_id, count);
 }
 
 void handle_delete(BallListManager* m, int count, int radius,int owner_id) {
     (void)radius;
     if (count <= 0) count = 1;
     delete_ball(m, count, owner_id);
+    log_ball_memory_usage(m, "DEL", owner_id, count);
 }
 
 void handle_speed_up(BallListManager* m, int count, int radius, int owner_id) {

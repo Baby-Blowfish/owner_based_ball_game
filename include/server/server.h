@@ -77,6 +77,7 @@ char parseCommand(const char* cmdStr, int* ball_count, int* radius);
  */
 void broadcast_ball_state(ClientListManager* client_mgr, BallListManager* ball_mgr);
 
+
 /**
  * @brief Logs a client connection event
  * @param fd Client file descriptor
@@ -97,17 +98,6 @@ void log_client_connect(int fd, struct sockaddr_in* cliaddr);
  */
 void log_client_disconnect(int fd, const char* reason);
 
-/**
- * @brief Logs ball memory usage
- * @param action Action performed (ADD or DEL)
- * @param fd Client file descriptor
- * @param count Number of balls
- * @details Records information about ball creation or deletion, including
- *          memory usage calculations.
- * @date 2025-04-07
- * @author Kim Hyo Jin
- */
-void log_ball_memory_usage(const char* action, int fd, int count);
 
 /**
  * @brief Worker thread function
