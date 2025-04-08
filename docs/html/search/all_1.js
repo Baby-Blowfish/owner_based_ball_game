@@ -7,5 +7,6 @@ var searchData=
   ['balllistmanager_8',['BallListManager',['../structBallListManager.html',1,'']]],
   ['balllistnode_9',['BallListNode',['../structBallListNode.html',1,'BallListNode'],['../screenball__list_8h.html#a7a25928e905b086dfd2011aa154ff478',1,'BallListNode():&#160;screenball_list.h'],['../localball__list_8h.html#a7a25928e905b086dfd2011aa154ff478',1,'BallListNode():&#160;localball_list.h'],['../test__screenball__list_8h.html#a7a25928e905b086dfd2011aa154ff478',1,'BallListNode():&#160;test_screenball_list.h']]],
   ['broadcast_5fball_5fstate_10',['broadcast_ball_state',['../server_8h.html#ab34e80f6999b6dccbccb8ce94b8e2cb7',1,'broadcast_ball_state(ClientListManager *client_mgr, BallListManager *ball_mgr):&#160;server.c'],['../server_8c.html#ab34e80f6999b6dccbccb8ce94b8e2cb7',1,'broadcast_ball_state(ClientListManager *client_mgr, BallListManager *ball_mgr):&#160;server.c']]],
-  ['ball_20game_11',['Ball Game',['../md_README.html',1,'']]]
+  ['broadcast_5fball_5fstate_5fall_11',['broadcast_ball_state_all',['../server_8h.html#a46c88e6684e4dda8d303a8bd52733934',1,'broadcast_ball_state_all(ClientListManager *client_mgr, BallListManager *ball_mgr):&#160;server.c'],['../server_8c.html#a46c88e6684e4dda8d303a8bd52733934',1,'broadcast_ball_state_all(ClientListManager *client_mgr, BallListManager *ball_mgr):&#160;server.c']]],
+  ['ball_20game_12',['Ball Game',['../md_README.html',1,'']]]
 ];

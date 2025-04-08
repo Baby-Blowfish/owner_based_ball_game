@@ -1,323 +1,414 @@
-# Ball Game
+# Ball Game Project
 
-A client-server based interactive ball game that allows multiple clients to connect to a server and manipulate balls on a shared display.
+A real-time multiplayer ball game system that allows clients to create, manipulate, and view animated balls on a shared display using Linux framebuffer.
 
 ## Technology Stack
 
-### Programming Language
-
-- **C**: Core implementation language
-- **C99 Standard**: Modern C features and syntax
-
-### System Programming
-
-- **Linux System Calls**: For low-level system operations
-- **POSIX Threads (pthread)**: For multi-threading support
-- **Socket Programming**: For network communication
-- **Framebuffer API**: For direct display manipulation
-
-### Network Communication
-
-- **TCP/IP**: For reliable client-server communication
-- **Socket API**: For network socket operations
-- **Select I/O Multiplexing**: For handling multiple client connections
-
-### Build Tools
-
-- **GCC**: GNU Compiler Collection
-- **Make**: Build automation tool
-- **GDB**: Debugging tool
-
-### Development Tools
-
-- **Doxygen**: Documentation generation
-- **Git**: Version control system
-- **Valgrind**: Memory leak detection and profiling
-
-### Libraries
-
-- **Standard C Library**: For basic I/O and data manipulation
-- **POSIX Library**: For system-level operations
-- **Linux Framebuffer Library**: For display operations
-
-### Operating System
-
-- **Linux**: Primary development and deployment platform
-- **Kernel Version**: 5.15.0 or higher recommended
+- **Language**: C
+- **Build System**: Make
+- **Key Libraries**:
+  - POSIX Threads (pthread)
+  - Linux Framebuffer
+  - Socket Programming (BSD sockets)
+  - epoll for event handling
 
 ## System Architecture
 
 ### High-Level Architecture
 
+The system follows a client-server architecture with the following components:
+
+1. **Server**
+
+   - Manages ball states and client connections
+   - Handles ball creation, deletion, and movement
+   - Broadcasts ball state updates to all connected clients
+   - Uses epoll for efficient event handling
+   - Implements a task queue for command processing
+
+2. **Client**
+
+   - Connects to the server
+   - Renders balls on the Linux framebuffer
+   - Handles user input for ball manipulation
+   - Receives and displays ball state updates
+   - Uses multiple threads for concurrent operations
+
+3. **Test Client**
+   - Provides automated testing capabilities
+   - Simulates client behavior for testing
+
+### Architecture Diagrams
+
+#### System Overview
+
 ```mermaid
-graph TD
-    subgraph "Server"
+graph TB
+    subgraph Server
         S[Server Process]
-        CLM[Client List Manager]
-        LBM[Local Ball Manager]
         TQ[Task Queue]
-        S --> CLM
-        S --> LBM
+        BLM[Ball List Manager]
+        CLM[Client List Manager]
+        EP[Epoll Event Handler]
+        LOG[Logging System]
+
         S --> TQ
+        S --> BLM
+        S --> CLM
+        S --> EP
+        S --> LOG
+
+        BLM -->|Ball State| LOG
+        CLM -->|Client Events| LOG
     end
 
-    subgraph "Client 1"
+    subgraph Client1
         C1[Client Process]
-        SBM1[Screen Ball Manager]
-        SBL1[Screen Ball List]
-        C1 --> SBM1
-        SBM1 --> SBL1
+        FB1[Framebuffer]
+        BL1[Ball List]
+        UI1[User Input Handler]
+        C1 --> FB1
+        C1 --> BL1
+        C1 --> UI1
+        UI1 -->|Commands| C1
     end
 
-    subgraph "Client 2"
+    subgraph Client2
         C2[Client Process]
-        SBM2[Screen Ball Manager]
-        SBL2[Screen Ball List]
-        C2 --> SBM2
-        SBM2 --> SBL2
-    end
-
-    subgraph "Client N"
-        CN[Client Process]
-        SBMN[Screen Ball Manager]
-        SBLN[Screen Ball List]
-        CN --> SBMN
-        SBMN --> SBLN
+        FB2[Framebuffer]
+        BL2[Ball List]
+        UI2[User Input Handler]
+        C2 --> FB2
+        C2 --> BL2
+        C2 --> UI2
+        UI2 -->|Commands| C2
     end
 
     S <-->|TCP/IP| C1
     S <-->|TCP/IP| C2
-    S <-->|TCP/IP| CN
 ```
 
-### Component Interaction
+#### Thread Model
+
+```mermaid
+graph TB
+    subgraph ServerThreads
+        MT[Main Thread]
+        WT1[Worker Thread 1]
+        WT2[Worker Thread 2]
+        WT3[Worker Thread 3]
+        WT4[Worker Thread 4]
+        BT[Broadcast Thread]
+
+        MT -->|Accept| CL[Client List]
+        MT -->|Events| EP[Epoll]
+        MT -->|Tasks| TQ[Task Queue]
+        TQ -->|Process| WT1
+        TQ -->|Process| WT2
+        TQ -->|Process| WT3
+        TQ -->|Process| WT4
+        BT -->|33 FPS| BL[Ball List]
+
+        WT1 -->|Update| BL
+        WT2 -->|Update| BL
+        WT3 -->|Update| BL
+        WT4 -->|Update| BL
+
+        BL -->|Serialize| BT
+        BT -->|Broadcast| CL
+    end
+
+    subgraph ClientThreads
+        RT[Render Thread]
+        ST[Socket Thread]
+        RST[Receive Thread]
+
+        RT -->|30 FPS| FB[Framebuffer]
+        ST -->|Send| SOCK[Socket]
+        RST -->|Receive| SOCK
+
+        SOCK -->|Deserialize| BL[Ball List]
+        BL -->|Render| RT
+    end
+```
+
+#### Data Flow
 
 ```mermaid
 sequenceDiagram
+    participant User
     participant Client
     participant Server
     participant TaskQueue
-    participant LocalBallManager
-    participant ClientListManager
+    participant BallManager
+    participant ClientManager
+    participant OtherClients
 
-    Client->>Server: Connect
-    Server->>ClientListManager: Register client
-    Server->>Client: Send initial game state
-
-    Client->>Server: Send command (add/delete ball)
-    Server->>TaskQueue: Add task
-    TaskQueue->>LocalBallManager: Process command
-    LocalBallManager->>LocalBallManager: Update game state
-    LocalBallManager->>ClientListManager: Notify state change
-    ClientListManager->>Client: Broadcast updated state
-    Client->>Client: Update display
+    User->>Client: Input Command (a, d, w, s, x)
+    Client->>Server: Send Command via Socket
+    Server->>TaskQueue: Enqueue Command
+    TaskQueue->>BallManager: Process Command
+    BallManager->>BallManager: Update Ball State
+    BallManager->>ClientManager: Notify State Change
+    ClientManager->>Server: Broadcast Update
+    Server->>Client: Send Update
+    Server->>OtherClients: Send Update
+    Client->>Client: Update Local Ball List
+    Client->>User: Display Update via Framebuffer
+    OtherClients->>OtherClients: Update Local Ball List
+    OtherClients->>OtherClients: Display Update
 ```
+
+#### Component Interaction
+
+```mermaid
+graph LR
+    subgraph ServerComponents
+        TQ[Task Queue]
+        BLM[Ball List Manager]
+        CLM[Client List Manager]
+        EP[Epoll Handler]
+        LOG[Logging System]
+
+        TQ -->|Commands| BLM
+        BLM -->|Updates| CLM
+        CLM -->|Broadcast| SOCK
+        EP -->|Events| TQ
+        BLM -->|Log| LOG
+        CLM -->|Log| LOG
+    end
+
+    subgraph ClientComponents
+        FB[Framebuffer]
+        BL[Ball List]
+        SOCK[Socket]
+        UI[User Input]
+
+        UI -->|Commands| SOCK
+        SOCK -->|Receive| BL
+        BL -->|Render| FB
+    end
+
+    SOCK <-->|TCP/IP| SOCK
+```
+
+#### Ball State Management
+
+```mermaid
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Creating: Add Ball Command
+    Creating --> Moving: Ball Created
+    Moving --> SpeedUp: Speed Up Command
+    Moving --> SpeedDown: Speed Down Command
+    SpeedUp --> Moving: Continue
+    SpeedDown --> Moving: Continue
+    Moving --> Deleting: Delete Ball Command
+    Deleting --> Idle: Ball Deleted
+    Moving --> Collision: Ball Collision
+    Collision --> Moving: Bounce
+```
+
+### Component Details
+
+#### Server Components
+
+1. **Task Queue System**
+
+   - Manages incoming client commands asynchronously
+   - Implements thread-safe queue operations
+   - Supports multiple worker threads for parallel processing
+
+2. **Ball List Manager**
+
+   - Maintains the authoritative state of all balls
+   - Handles ball creation, deletion, and movement
+   - Implements thread-safe operations with mutex protection
+   - Manages ball properties (position, radius, speed)
+
+3. **Client List Manager**
+
+   - Tracks all connected clients
+   - Manages client connections and disconnections
+   - Handles client authentication and session management
+   - Implements thread-safe client list operations
+
+4. **Event Handling System**
+   - Uses epoll for efficient I/O event handling
+   - Manages multiple client connections
+   - Handles socket events asynchronously
+
+#### Client Components
+
+1. **Framebuffer Manager**
+
+   - Controls direct display output
+   - Handles screen buffer management
+   - Implements efficient drawing operations
+   - Manages display resolution and color depth
+
+2. **Ball List Manager**
+
+   - Maintains local copy of ball states
+   - Implements thread-safe operations
+   - Handles ball state updates from server
+   - Manages ball rendering properties
+
+3. **Socket Communication**
+   - Handles bidirectional communication with server
+   - Implements reliable data transmission
+   - Manages connection state
+   - Handles reconnection logic
 
 ### Thread Model
 
-```mermaid
-graph TD
-    subgraph "Client Threads"
-        MT[Main Thread]
-        RDT[Render Thread]
-        SRT[Socket Receive Thread]
-        SST[Socket Send Thread]
+#### Server Threads
 
-        MT -->|Create| RDT
-        MT -->|Create| SRT
-        MT -->|Create| SST
+1. **Main Thread**
 
-        RDT -->|30 FPS| FB[Framebuffer]
-        SRT -->|Receive| SB[Screen Ball List]
-        SST -->|Send| SV[Server]
+   - Accepts new client connections
+   - Manages epoll event loop
+   - Coordinates worker threads
+   - Handles server shutdown
 
-        UI[User Input] -->|Commands| SST
-    end
+2. **Worker Threads (4 threads)**
 
-    subgraph "Server Threads"
-        ST[Main Thread]
-        WT1[Worker Thread 1]
-        WT2[Worker Thread 2]
-        WTN[Worker Thread N]
-        CBT[Cycle Broadcast Thread]
+   - Process client commands from task queue
+   - Update ball states
+   - Handle ball creation/deletion
+   - Manage ball movement and collisions
 
-        ST -->|Create| WT1
-        ST -->|Create| WT2
-        ST -->|Create| WTN
-        ST -->|Create| CBT
+3. **Broadcast Thread**
+   - Periodically sends ball state updates (33 FPS)
+   - Serializes ball data for transmission
+   - Handles client disconnections
+   - Manages broadcast queue
 
-        ST -->|epoll_wait| EP[Epoll Events]
-        EP -->|Accept| ST
-        EP -->|EPOLLIN| ST
+#### Client Threads
 
-        ST -->|Task| TQ[Task Queue]
-        TQ -->|Dequeue| WT1
-        TQ -->|Dequeue| WT2
-        TQ -->|Dequeue| WTN
+1. **Render Thread**
 
-        CBT -->|33 FPS| LBM[Local Ball Manager]
-        CBT -->|Broadcast| CLM[Client List Manager]
-    end
-```
+   - Updates display at 30 FPS
+   - Manages framebuffer operations
+   - Handles ball animation
+   - Implements double buffering
+
+2. **Socket Receive Thread**
+
+   - Receives server updates
+   - Deserializes ball data
+   - Updates local ball state
+   - Handles connection errors
+
+3. **Socket Send Thread**
+   - Processes user input
+   - Sends commands to server
+   - Manages command queue
+   - Handles connection state
 
 ### Data Flow
 
-```mermaid
-flowchart LR
-    subgraph "Client"
-        UI[User Input]
-        SB[Screen Ball Manager]
-        FB[Framebuffer]
-        UI -->|Commands| SB
-        SB -->|Render| FB
-    end
+1. **Command Flow**:
 
-    subgraph "Network"
-        TCP[TCP/IP Socket]
-    end
+   ```
+   Client Input → Socket Send Thread → Server Socket → Task Queue → Worker Thread → Ball State Update
+   ```
 
-    subgraph "Server"
-        CM[Command Parser]
-        LBM[Local Ball Manager]
-        CLM[Client List Manager]
-        CM -->|Process| LBM
-        LBM -->|Update| CLM
-        CLM -->|Broadcast| TCP
-    end
+2. **State Update Flow**:
 
-    UI -->|Send| TCP
-    TCP -->|Receive| CM
-    TCP -->|Receive| SB
-```
+   ```
+   Ball State Change → Server Broadcast Thread → Client Socket Receive Thread → Ball List Update → Render Thread → Display
+   ```
 
-## Project Overview
+3. **Synchronization Flow**:
+   ```
+   Mutex Lock → Resource Access → Resource Update → Mutex Unlock
+   ```
 
-Ball Game is a networked application that consists of a server and multiple clients. The server manages the game state and coordinates between clients, while each client connects to the server and displays the game on a framebuffer device.
+### Resource Management
 
-## Architecture
+1. **Memory Management**
 
-The project is organized into three main components:
+   - Dynamic allocation for ball objects
+   - Thread-safe memory operations
+   - Proper resource cleanup
+   - Memory leak prevention
 
-### Server Component
+2. **File Descriptor Management**
 
-- **Server**: Manages client connections and game state
-- **Client List Manager**: Handles client connections and disconnections
-- **Local Ball Manager**: Manages the ball objects on the server side
-- **Task Queue**: Processes client commands asynchronously
+   - Efficient socket handling
+   - Proper FD cleanup
+   - Resource limit management
+   - Error handling
 
-### Client Component
-
-- **Client**: Connects to the server and receives game state updates
-- **Screen Ball Manager**: Manages the display of balls on the client's screen
-- **Screen Ball List**: Maintains a list of balls to be displayed
-
-### Shared Component
-
-- **Framebuffer Drawing**: Provides functions for drawing on the framebuffer
-- **Logging**: Handles logging of events and errors
-- **Console Color**: Provides colored output for console messages
+3. **Thread Synchronization**
+   - Mutex protection for shared resources
+   - Thread-safe data structures
+   - Deadlock prevention
+   - Resource contention management
 
 ## Features
 
-- **Multi-client Support**: Multiple clients can connect to the server simultaneously
-- **Real-time Updates**: Changes to the game state are broadcast to all connected clients
-- **Interactive Ball Manipulation**: Clients can add, delete, and modify balls
-- **Framebuffer Display**: Game is displayed directly on the framebuffer device
-- **Threaded Architecture**: Uses multiple threads for rendering, sending, and receiving data
+- Real-time ball animation
+- Multi-client support
+- Command-based ball manipulation:
+  - Create balls (`a` or `a:<count>`)
+  - Delete balls (`d` or `d:<count>`)
+  - Speed control (`w` for increase, `s` for decrease)
+- Linux framebuffer-based rendering
+- Thread-safe operations
+- Comprehensive logging system
+- Graceful shutdown handling
 
 ## Directory Structure
 
 ```
-Ball_Game/
-├── include/
-│   ├── client/
-│   │   ├── client.h
-│   │   ├── screenball.h
-│   │   ├── screenball_list.h
-│   │   └── screenballmanager.h
-│   ├── server/
-│   │   ├── client_list_manager.h
-│   │   ├── localball.h
-│   │   ├── localball_list.h
-│   │   ├── localballmanager.h
-│   │   ├── server.h
-│   │   └── task.h
-│   └── shared/
-│       ├── console_color.h
-│       ├── fbDraw.h
-│       └── log.h
-└── src/
-    ├── client/
-    │   ├── client.c
-    │   ├── main.c
-    │   ├── screenball.c
-    │   ├── screenball_list.c
-    │   └── screenballmanager.c
-    ├── server/
-    │   ├── client_list_manager.c
-    │   ├── localballmanager.c
-    │   ├── localball_list.c
-    │   ├── loaclball.c
-    │   ├── main.c
-    │   ├── server.c
-    │   └── task.c
-    └── shared/
-        ├── fbDraw.c
-        └── log.c
+ball_game/
+├── bin/                    # Compiled executables
+├── docs/                   # Documentation
+├── include/               # Header files
+│   ├── client/           # Client-specific headers
+│   ├── server/           # Server-specific headers
+│   ├── shared/           # Shared headers
+│   └── test_client/      # Test client headers
+├── logs/                  # Log files
+├── obj/                   # Object files
+└── src/                   # Source files
+    ├── client/           # Client implementation
+    ├── server/           # Server implementation
+    ├── shared/           # Shared implementation
+    └── test_client/      # Test client implementation
 ```
-
-## Key Components
-
-### Server
-
-- Manages client connections using sockets
-- Processes client commands and updates the game state
-- Broadcasts state changes to all connected clients
-- Uses a task queue for asynchronous command processing
-
-### Client
-
-- Connects to the server using sockets
-- Receives game state updates from the server
-- Renders the game state on the framebuffer
-- Sends user commands to the server
-
-### Ball Management
-
-- **Server-side**: LocalBallManager maintains the authoritative game state
-- **Client-side**: ScreenBallManager displays the game state
-- Balls have properties such as position, radius, and color
-
-### Framebuffer Drawing
-
-- Provides low-level drawing functions for the framebuffer
-- Supports drawing shapes, lines, and text
-- Handles color management and screen updates
 
 ## Building and Running
 
-### Prerequisites
+1. Build all components:
 
-- Linux operating system with framebuffer support
-- GCC compiler
-- Make build system
-- pthread library
+   ```bash
+   make
+   ```
 
-### Build Instructions
+2. Run the server:
 
-1. Clone the repository
-2. Navigate to the project directory
-3. Run `make` to build both server and client
+   ```bash
+   ./bin/server
+   ```
 
-### Running the Application
+3. Run the client:
 
-1. Start the server: `./server`
-2. Start one or more clients: `./client`
+   ```bash
+   ./bin/client
+   ```
 
-## Author
+4. Run the test client:
+   ```bash
+   ./bin/test_client
+   ```
 
-Kim Hyo Jin
+## Command Guide
 
-## License
-
-This project is proprietary and confidential.
+- Create a ball: `a` or `a:<count>`
+- Delete a ball: `d` or `d:<count>`
+- Increase speed: `w`
+- Decrease speed: `s`
+- Exit: `x`

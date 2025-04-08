@@ -154,6 +154,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ab34e80f6999b6dccbccb8ce94b8e2cb7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8h.html#ab34e80f6999b6dccbccb8ce94b8e2cb7">broadcast_ball_state</a> (<a class="el" href="structClientListManager.html">ClientListManager</a> *client_mgr, <a class="el" href="structBallListManager.html">BallListManager</a> *ball_mgr)</td></tr>
 <tr class="memdesc:ab34e80f6999b6dccbccb8ce94b8e2cb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts the ball state to all clients.  <a href="server_8h.html#ab34e80f6999b6dccbccb8ce94b8e2cb7">More...</a><br /></td></tr>
 <tr class="separator:ab34e80f6999b6dccbccb8ce94b8e2cb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46c88e6684e4dda8d303a8bd52733934"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8h.html#a46c88e6684e4dda8d303a8bd52733934">broadcast_ball_state_all</a> (<a class="el" href="structClientListManager.html">ClientListManager</a> *client_mgr, <a class="el" href="structBallListManager.html">BallListManager</a> *ball_mgr)</td></tr>
+<tr class="memdesc:a46c88e6684e4dda8d303a8bd52733934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcasts the ball state to all clients.  <a href="server_8h.html#a46c88e6684e4dda8d303a8bd52733934">More...</a><br /></td></tr>
+<tr class="separator:a46c88e6684e4dda8d303a8bd52733934"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad97aead738911fe5abfe88056e41625b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="server_8h.html#ad97aead738911fe5abfe88056e41625b">log_client_connect</a> (int fd, struct sockaddr_in *cliaddr)</td></tr>
 <tr class="memdesc:ad97aead738911fe5abfe88056e41625b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a client connection event.  <a href="server_8h.html#ad97aead738911fe5abfe88056e41625b">More...</a><br /></td></tr>
 <tr class="separator:ad97aead738911fe5abfe88056e41625b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,6 +216,45 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">void broadcast_ball_state </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structClientListManager.html">ClientListManager</a> *&#160;</td>
+          <td class="paramname"><em>client_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structBallListManager.html">BallListManager</a> *&#160;</td>
+          <td class="paramname"><em>ball_mgr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Broadcasts the ball state to all clients. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">client_mgr</td><td>Pointer to the client list manager </td></tr>
+    <tr><td class="paramname">ball_mgr</td><td>Pointer to the ball list manager</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Serializes the ball list into a string and sends it to all connected clients. </p><dl class="section date"><dt>Date</dt><dd>2025-04-07 </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Kim Hyo Jin </dd></dl>
+
+</div>
+</div>
+<a id="a46c88e6684e4dda8d303a8bd52733934"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46c88e6684e4dda8d303a8bd52733934">&#9670;&nbsp;</a></span>broadcast_ball_state_all()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void broadcast_ball_state_all </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structClientListManager.html">ClientListManager</a> *&#160;</td>
           <td class="paramname"><em>client_mgr</em>, </td>

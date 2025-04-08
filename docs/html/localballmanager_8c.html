@@ -121,6 +121,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a2082b26fcf72cea20fa8663884824140"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="localballmanager_8c.html#a2082b26fcf72cea20fa8663884824140">serialize_ball_list</a> (<a class="el" href="structBallListManager.html">BallListManager</a> *manager, int owner_id)</td></tr>
 <tr class="memdesc:a2082b26fcf72cea20fa8663884824140"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serializes the ball list into a string.  <a href="localballmanager_8c.html#a2082b26fcf72cea20fa8663884824140">More...</a><br /></td></tr>
 <tr class="separator:a2082b26fcf72cea20fa8663884824140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46ad3e702269364aab81b2e0ef75479b"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="localballmanager_8c.html#a46ad3e702269364aab81b2e0ef75479b">serialize_ball_list_all</a> (<a class="el" href="structBallListManager.html">BallListManager</a> *manager)</td></tr>
+<tr class="separator:a46ad3e702269364aab81b2e0ef75479b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91e67ffa6b48574c521ed176a77339f9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="localballmanager_8c.html#a91e67ffa6b48574c521ed176a77339f9">count_ball_by_owner</a> (<a class="el" href="structBallListNode.html">BallListNode</a> *head, int owner_id)</td></tr>
 <tr class="memdesc:a91e67ffa6b48574c521ed176a77339f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the number of balls by owner.  <a href="localballmanager_8c.html#a91e67ffa6b48574c521ed176a77339f9">More...</a><br /></td></tr>
 <tr class="separator:a91e67ffa6b48574c521ed176a77339f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -775,6 +777,24 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a46ad3e702269364aab81b2e0ef75479b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46ad3e702269364aab81b2e0ef75479b">&#9670;&nbsp;</a></span>serialize_ball_list_all()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* serialize_ball_list_all </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structBallListManager.html">BallListManager</a> *&#160;</td>
+          <td class="paramname"><em>manager</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a id="a89e3933ede6944f35dd30bacfaa3bea4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a89e3933ede6944f35dd30bacfaa3bea4">&#9670;&nbsp;</a></span>command_table</h2>
@@ -800,11 +820,11 @@ Variables</h2></td></tr>
 <div class="ttc" id="ascreenballmanager_8h_html_a2942029130a40135ff412347dabb77bb"><div class="ttname"><a href="screenballmanager_8h.html#a2942029130a40135ff412347dabb77bb">CMD_SPEED_DOWN</a></div><div class="ttdeci">#define CMD_SPEED_DOWN</div><div class="ttdoc">Slow down balls command.</div><div class="ttdef"><b>Definition:</b> screenballmanager.h:25</div></div>
 <div class="ttc" id="ascreenballmanager_8h_html_a06006efb7fdb7b009d00c78210d9e466"><div class="ttname"><a href="screenballmanager_8h.html#a06006efb7fdb7b009d00c78210d9e466">CMD_SPEED_UP</a></div><div class="ttdeci">#define CMD_SPEED_UP</div><div class="ttdoc">Speed up balls command.</div><div class="ttdef"><b>Definition:</b> screenballmanager.h:24</div></div>
 <div class="ttc" id="ascreenballmanager_8h_html_a705b5452a36f343b954b28197b364306"><div class="ttname"><a href="screenballmanager_8h.html#a705b5452a36f343b954b28197b364306">CMD_ADD</a></div><div class="ttdeci">#define CMD_ADD</div><div class="ttdoc">Command definitions for ball operations.</div><div class="ttdef"><b>Definition:</b> screenballmanager.h:22</div></div>
-<div class="ttc" id="alocalballmanager_8c_html_aa00cddab1af58b8b087352b036ed0c5d"><div class="ttname"><a href="localballmanager_8c.html#aa00cddab1af58b8b087352b036ed0c5d">handle_speed_up</a></div><div class="ttdeci">void handle_speed_up(BallListManager *m, int count, int radius, int owner_id)</div><div class="ttdoc">Handles the speed up command.</div><div class="ttdef"><b>Definition:</b> localballmanager.c:190</div></div>
-<div class="ttc" id="alocalballmanager_8c_html_a6cafbcbb30bfb6d5c15f487c1eb17267"><div class="ttname"><a href="localballmanager_8c.html#a6cafbcbb30bfb6d5c15f487c1eb17267">handle_add</a></div><div class="ttdeci">void handle_add(BallListManager *m, int count, int radius, int owner_id)</div><div class="ttdoc">Handles the add ball command.</div><div class="ttdef"><b>Definition:</b> localballmanager.c:177</div></div>
-<div class="ttc" id="alocalballmanager_8c_html_a6a6b9aad59d23a8c08806a0585c3a7cb"><div class="ttname"><a href="localballmanager_8c.html#a6a6b9aad59d23a8c08806a0585c3a7cb">handle_delete</a></div><div class="ttdeci">void handle_delete(BallListManager *m, int count, int radius, int owner_id)</div><div class="ttdoc">Handles the delete ball command.</div><div class="ttdef"><b>Definition:</b> localballmanager.c:183</div></div>
+<div class="ttc" id="alocalballmanager_8c_html_aa00cddab1af58b8b087352b036ed0c5d"><div class="ttname"><a href="localballmanager_8c.html#aa00cddab1af58b8b087352b036ed0c5d">handle_speed_up</a></div><div class="ttdeci">void handle_speed_up(BallListManager *m, int count, int radius, int owner_id)</div><div class="ttdoc">Handles the speed up command.</div><div class="ttdef"><b>Definition:</b> localballmanager.c:212</div></div>
+<div class="ttc" id="alocalballmanager_8c_html_a6cafbcbb30bfb6d5c15f487c1eb17267"><div class="ttname"><a href="localballmanager_8c.html#a6cafbcbb30bfb6d5c15f487c1eb17267">handle_add</a></div><div class="ttdeci">void handle_add(BallListManager *m, int count, int radius, int owner_id)</div><div class="ttdoc">Handles the add ball command.</div><div class="ttdef"><b>Definition:</b> localballmanager.c:199</div></div>
+<div class="ttc" id="alocalballmanager_8c_html_a6a6b9aad59d23a8c08806a0585c3a7cb"><div class="ttname"><a href="localballmanager_8c.html#a6a6b9aad59d23a8c08806a0585c3a7cb">handle_delete</a></div><div class="ttdeci">void handle_delete(BallListManager *m, int count, int radius, int owner_id)</div><div class="ttdoc">Handles the delete ball command.</div><div class="ttdef"><b>Definition:</b> localballmanager.c:205</div></div>
 <div class="ttc" id="ascreenballmanager_8h_html_a1e4ff1a3a7e4e8404651f96a0f6c3859"><div class="ttname"><a href="screenballmanager_8h.html#a1e4ff1a3a7e4e8404651f96a0f6c3859">CMD_DEL</a></div><div class="ttdeci">#define CMD_DEL</div><div class="ttdoc">Delete balls command.</div><div class="ttdef"><b>Definition:</b> screenballmanager.h:23</div></div>
-<div class="ttc" id="alocalballmanager_8c_html_a75ad5a08a0e6e26e52117b44469571d8"><div class="ttname"><a href="localballmanager_8c.html#a75ad5a08a0e6e26e52117b44469571d8">handle_speed_down</a></div><div class="ttdeci">void handle_speed_down(BallListManager *m, int count, int radius, int owner_id)</div><div class="ttdoc">Handles the speed down command.</div><div class="ttdef"><b>Definition:</b> localballmanager.c:196</div></div>
+<div class="ttc" id="alocalballmanager_8c_html_a75ad5a08a0e6e26e52117b44469571d8"><div class="ttname"><a href="localballmanager_8c.html#a75ad5a08a0e6e26e52117b44469571d8">handle_speed_down</a></div><div class="ttdeci">void handle_speed_down(BallListManager *m, int count, int radius, int owner_id)</div><div class="ttdoc">Handles the speed down command.</div><div class="ttdef"><b>Definition:</b> localballmanager.c:218</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
