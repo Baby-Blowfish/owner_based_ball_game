@@ -137,6 +137,8 @@ void move_all_ball(BallListManager* manager);
  */
 char* serialize_ball_list(BallListManager* manager, int owner_id);
 
+char* serialize_ball_list_all(BallListManager* manager);
+
 /**
  * @brief Counts the number of balls by owner
  * @param head Pointer to the head of the ball list

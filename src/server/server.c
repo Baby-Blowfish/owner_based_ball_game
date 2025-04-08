@@ -131,6 +131,24 @@ void broadcast_ball_state(ClientListManager* client_mgr, BallListManager* ball_m
     }
 }
 
+// 공 리스트를 문자열로 직렬화하여 모든 클라이언트에 전송
+void broadcast_ball_state_all(ClientListManager* client_mgr, BallListManager* ball_mgr) {
+   
+    char* buffer  = serialize_ball_list_all(ball_mgr);
+
+    if(!buffer) return;
+    
+    ClientNode* curr = client_mgr->head;
+    while (curr) {
+        send(curr->ctx.csock, buffer, strlen(buffer), 0);
+        curr = curr->next;
+    }
+
+    free(buffer);
+}
+
+
+
 void log_client_connect(int fd, struct sockaddr_in* cliaddr) {
     char ip[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &(cliaddr->sin_addr), ip, INET_ADDRSTRLEN);
@@ -234,8 +252,8 @@ void* cycle_broadcast_ball_state(void* arg) {
         pthread_mutex_unlock(&ctx->client_list_manager->mutex_client);
 
         move_all_ball(ctx->ball_list_manager);
-        broadcast_ball_state(ctx->client_list_manager, ctx->ball_list_manager);
-        
+        //broadcast_ball_state(ctx->client_list_manager, ctx->ball_list_manager);
+        broadcast_ball_state_all(ctx->client_list_manager, ctx->ball_list_manager);
         pthread_mutex_unlock(&ctx->ball_list_manager->mutex_ball);
         pthread_mutex_unlock(&ctx->client_list_manager->mutex_client);
     }

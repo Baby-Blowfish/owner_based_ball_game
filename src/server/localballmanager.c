@@ -146,6 +146,28 @@ char* serialize_ball_list(BallListManager* manager, int owner_id) {
     return buffer; // 호출자가 free 해야 함
 }
 
+char* serialize_ball_list_all(BallListManager* manager) {
+    BallListNode* cur = manager->head;
+    char* buffer = (char*)malloc(8192);
+    buffer[0] = '\0';
+
+    while (cur) {
+        char temp[256];
+        snprintf(temp, sizeof(temp), "%d,%.2f,%.2f,%d,%d,%d,%hhu,%hhu,%hhu|",
+                 cur->data.id,
+                 cur->data.x, cur->data.y,
+                 cur->data.dx, cur->data.dy,
+                 cur->data.radius,
+                 cur->data.color.r, cur->data.color.g, cur->data.color.b);
+
+        strcat(buffer, temp);
+        cur = cur->next;
+    }
+
+    return buffer; // 호출자가 free 해야 함
+}
+
+
 int count_ball_by_owner(BallListNode* head, int owner_id) {
     int count = 0;
     while (head) {

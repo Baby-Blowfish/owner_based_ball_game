@@ -77,7 +77,15 @@ char parseCommand(const char* cmdStr, int* ball_count, int* radius);
  */
 void broadcast_ball_state(ClientListManager* client_mgr, BallListManager* ball_mgr);
 
-
+/**
+ * @brief Broadcasts the ball state to all clients
+ * @param client_mgr Pointer to the client list manager
+ * @param ball_mgr Pointer to the ball list manager
+ * @details Serializes the ball list into a string and sends it to all connected clients.
+ * @date 2025-04-07
+ * @author Kim Hyo Jin
+ */
+void broadcast_ball_state_all(ClientListManager* client_mgr, BallListManager* ball_mgr);    
 /**
  * @brief Logs a client connection event
  * @param fd Client file descriptor
