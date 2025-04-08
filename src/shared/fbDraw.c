@@ -13,6 +13,15 @@ int fb_init(dev_fb* fb)
 	if(ioctl(fb->fbfd, FBIOGET_VSCREENINFO, &(fb->vinfo)) < 0)
 		return FB_GET_VINFO_FAIL;
 
+
+	fb->vinfo.xres = 1920;
+	fb->vinfo.yres = 1080;
+	fb->vinfo.xres_virtual = 1920;
+	fb->vinfo.yres_virtual = 1080;
+
+
+	if(ioctl(fb->fbfd, FBIOPUT_VSCREENINFO, &(fb->vinfo)) < 0)
+		return FB_GET_VINFO_FAIL;
 	// 현재 프레임 버퍼의 해상도 및 색상 깊이 정보 출력
 	printf("Resolution : %dx%d, %dbpp\n", fb->vinfo.xres, fb->vinfo.yres, fb->vinfo.bits_per_pixel);
 	printf("Virtual Resolution : %dx%d\n", fb->vinfo.xres_virtual, fb->vinfo.yres_virtual);
@@ -23,7 +32,7 @@ int fb_init(dev_fb* fb)
 	printf("Blue: offset = %d, length = %d\n", fb->vinfo.blue.offset, fb->vinfo.blue.length);
 	printf("Alpha (transparency): offset = %d, length = %d\n", fb->vinfo.transp.offset, fb->vinfo.transp.length);
 
-	fb->screensize=fb->vinfo.xres * fb->vinfo.yres * fb->vinfo.bits_per_pixel / 8;
+	fb->screensize=fb->finfo.line_length * fb->vinfo.yres;
 
 	fb->fbp = (ubyte*)mmap(NULL,fb->screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fb->fbfd, 0);
 	if(fb->fbp==MAP_FAILED) {
