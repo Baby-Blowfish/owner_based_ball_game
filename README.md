@@ -2,6 +2,26 @@
 
 A real-time multiplayer ball game system that allows clients to create, manipulate, and view animated balls on a shared display using Linux framebuffer.
 
+## 🧠 Retrospective | Ball Game Server-Client Implementation
+
+### ✅ Key Features
+- Designed and implemented an `epoll + worker thread` based server architecture
+- Built a full flow: client key input → server processing → framebuffer rendering
+- Managed Ball objects using a linked list and applied a logical coordinate system
+- Implemented real-time broadcasting of the ball list to all clients
+- Developed a custom `logger` to redirect stdout to a file
+
+### 💡 What I Learned
+- epoll-based architecture was challenging at first, but breaking down responsibilities helped me understand it deeply
+- Managing Ball objects with a linked list led to pointer issues and memory leaks, which strengthened my debugging skills
+- Working on real-time broadcasting made me think from the **user's perspective** — how data is *displayed* is just as important as how it's *sent*
+- Creating a custom logging system taught me the value of structured logging for debugging and maintainability
+
+### 🔧 Future Improvements
+- Apply Doxygen for automatic documentation
+- Use UML diagrams to plan system structure before coding
+- Refactor broadcast logic to handle per-client ball state separately
+
 ## Technology Stack
 
 - **Language**: C
